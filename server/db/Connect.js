@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 
 const connectDB = (url) => {
-  return mongoose.connect(url, {
-    // useCreatendex: true,
-    // useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.log(error.message);
+    process.exit(1);
+  }
+  return;
 };
-export default connectDB
+export default connectDB;
