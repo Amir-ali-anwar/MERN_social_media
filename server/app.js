@@ -8,7 +8,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./db/Connect.js";
-
+import "express-async-errors";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -21,7 +21,15 @@ app.use(morgan("common"));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-
+const storage= multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null,'public/assets')
+  },
+  filename:function(req,file,cb){
+    cb(null,file.originalname)
+  }
+})
+const upload= multer({storage})
 const PORT = process.env.PORT || 4000;
 const start = async () => {
   try {
