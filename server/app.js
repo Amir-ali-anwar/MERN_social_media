@@ -9,6 +9,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./db/Connect.js";
 import "express-async-errors";
+//Routes 
+import authRoutes from './routes/authRoutes.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -29,6 +31,10 @@ const storage= multer.diskStorage({
     cb(null,file.originalname)
   }
 })
+
+
+// Routes Configurations
+app.use("/api/v1/auth", authRoutes);
 const upload= multer({storage})
 const PORT = process.env.PORT || 4000;
 const start = async () => {
