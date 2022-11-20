@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 const register = async (req, res, next) => {
   const {
     firstName,
@@ -24,6 +24,19 @@ const register = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({ User: { firstName: user.firstName,email:user.email }, token });
 };
 const login = async (req, res) => {
-  res.send("login");
+  const {email,password}= req.body
+  if(!email || !password){
+    throw new BadRequestError("Please enter your email and password");
+  }
+  const checkEmail= await User.findOne({email});
+  if (!checkEmail) {
+    throw new UnauthenticatedError("Email does not exist");
+  }
+  const comparePassword = await checkEmail.ComparePassword(password);
+  if(!comparePassword){
+    throw new UnauthenticatedError("Password does not match");
+  }
+  const token= await checkEmail.CreateJWT()
+  res.status(StatusCodes.OK).json({ user: { UserName: checkEmail.firstName }, token });
 };
 export { login, register };
