@@ -12,28 +12,16 @@ const register = async (req, res, next) => {
     location,
     occupation,
   } = req.body;
-  if (
-    !firstName ||
-    !lastName ||
-    !email ||
-    !password ||
-    !friends ||
-    !location ||
-    !occupation
-  ) {
+  if (!firstName ||!lastName ||!email ||!password ||!friends ||!location ||!occupation) {
     throw new BadRequestError("Please Provide all the values");
   }
-  const alreadyExist = User.findOne(email);
+  const alreadyExist = await User.findOne({email});
   if (alreadyExist) {
     throw new BadRequestError("Email already in use");
   }
   const user= await User.create(req.body)
   const token = user.CreateJWT();
-  return res.status(StatusCodes.CREATED).json({
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-  },token);
+  res.status(StatusCodes.CREATED).json({ User: { firstName: user.firstName,email:user.email }, token });
 };
 const login = async (req, res) => {
   res.send("login");
