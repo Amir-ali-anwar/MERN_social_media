@@ -37,6 +37,6 @@ const login = async (req, res) => {
     throw new UnauthenticatedError("Password does not match");
   }
   const token= await checkEmail.CreateJWT()
-  res.status(StatusCodes.OK).json({ user: { UserName: checkEmail.firstName }, token });
+  res.status(StatusCodes.OK).json({ user: { UserName: checkEmail.firstName,Email:checkEmail.email }, token });
 };
 export { login, register };
