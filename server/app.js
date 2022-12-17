@@ -11,6 +11,7 @@ import connectDB from "./db/Connect.js";
 import "express-async-errors";
 //Routes 
 import authRoutes from './routes/authRoutes.js'
+import authRoutes from './routes/userRoutes.js'
 //Middlewares
 import notFoundMiddlewalre from "./middlewares/not-found.js";
 import errorHandlerMiddleware from "./middlewares/error-handler.js";
@@ -36,6 +37,7 @@ const storage= multer.diskStorage({
 })
 // Routes Configurations
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 
 // Middlewares
 app.use(notFoundMiddlewalre);

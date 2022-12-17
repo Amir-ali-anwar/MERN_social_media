@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+
+// register user
 const register = async (req, res, next) => {
   const {
     firstName,
@@ -23,6 +25,7 @@ const register = async (req, res, next) => {
   const token = user.CreateJWT();
   res.status(StatusCodes.CREATED).json({ User: { firstName: user.firstName,email:user.email }, token });
 };
+// login user
 const login = async (req, res) => {
   const {email,password}= req.body
   if(!email || !password){
