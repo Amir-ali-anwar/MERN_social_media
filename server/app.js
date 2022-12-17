@@ -11,7 +11,7 @@ import connectDB from "./db/Connect.js";
 import "express-async-errors";
 //Routes 
 import authRoutes from './routes/authRoutes.js'
-import authRoutes from './routes/userRoutes.js'
+import userRoutes from "./routes/userRoutes.js";
 //Middlewares
 import notFoundMiddlewalre from "./middlewares/not-found.js";
 import errorHandlerMiddleware from "./middlewares/error-handler.js";
