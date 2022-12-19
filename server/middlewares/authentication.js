@@ -15,3 +15,5 @@ const auth = async (req, res, next) => {
      throw new UnauthenticatedError("Authentication invalid");
   }
 };
+
+export default auth
